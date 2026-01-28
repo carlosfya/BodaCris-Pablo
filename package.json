@@ -1,0 +1,40 @@
+{
+  "name": "boda-google-sheets",
+  "version": "1.0.0",
+  "description": "Web de boda con conexión a Google Sheets",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "serve": "npx serve .",
+    "dev:ui": "node ./node_modules/vite/bin/vite.js",
+    "build:ui": "node ./node_modules/vite/bin/vite.js build",
+    "build": "npm run build:ui",
+    "preview:ui": "node ./node_modules/vite/bin/vite.js preview",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "framer-motion": "^11.0.0",
+    "googleapis": "^144.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.6.0",
+    "vite": "^5.4.0"
+  },
+  "keywords": [
+    "boda",
+    "google-sheets",
+    "vercel"
+  ],
+  "author": "",
+  "license": "ISC"
+}

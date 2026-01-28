@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cómo Llegar | Pablo & Cris</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💒</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="ui/timeline.css">
+  <style>
+    /* Small wrapper so the React component blends with the existing wedding site */
+    .timeline-page {
+      min-height: 100vh;
+      background: linear-gradient(180deg, #faf8f5 0%, #f5f2ed 50%, #faf8f5 100%);
+      padding-top: clamp(6.5rem, 12vw, 9rem);
+    }
+
+    .timeline-page__header {
+      text-align: center;
+      padding: 0 2rem 1rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .timeline-page__names {
+      font-family: var(--font-title);
+      font-size: clamp(2.6rem, 8vw, 4.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: #7d9b76;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .timeline-page__date {
+      font-family: var(--font-title);
+      font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+      font-style: italic;
+      color: #d4a5a5;
+      letter-spacing: 0.15em;
+    }
+
+    /* Fallback content while the React bundle is not built yet */
+    .timeline-fallback {
+      max-width: 900px;
+      margin: 2rem auto 0;
+      padding: 0 2rem 4rem;
+    }
+
+    .timeline-fallback__title {
+      font-family: var(--font-title);
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 300;
+      font-style: italic;
+      color: #7d9b76;
+      margin: 1.5rem 0 0.8rem;
+    }
+
+    .timeline-fallback__lead {
+      font-family: var(--font-body);
+      color: #8a8a8a;
+      max-width: 520px;
+      margin: 0;
+    }
+
+    .timeline-fallback__list {
+      list-style: none;
+      padding: 0;
+      margin: 1.8rem 0 0;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .timeline-fallback__item {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(201, 184, 150, 0.25);
+      border-radius: 18px;
+      padding: 1rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    }
+
+    .timeline-fallback__img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid rgba(255, 255, 255, 0.85);
+      flex: 0 0 64px;
+    }
+
+    .timeline-fallback__img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .timeline-fallback__time {
+      font-family: var(--font-title);
+      color: #d4a5a5;
+      font-style: italic;
+      font-size: 1.1rem;
+      margin: 0;
+      letter-spacing: 0.06em;
+      min-width: 4.2rem;
+    }
+
+    .timeline-fallback__name {
+      font-family: var(--font-title);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #5a5a5a;
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .timeline-fallback__meta {
+      font-family: var(--font-body);
+      color: #8a8a8a;
+      margin: 0.25rem 0 0;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body class="page-subpage">
+  <header class="header header--solid" id="header">
+    <nav class="nav container">
+      <a href="index.html" class="nav__logo">P & C</a>
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list">
+          <li class="nav__item"><a href="index.html" class="nav__link">Inicio</a></li>
+          <li class="nav__item"><a href="como-llegar.html" class="nav__link active">Cómo Llegar</a></li>
+          <li class="nav__item"><a href="preboda.html" class="nav__link">Preboda</a></li>
+          <li class="nav__item"><a href="confirmar.html" class="nav__link">Confirmar</a></li>
+          <li class="nav__item"><a href="regalos.html" class="nav__link">Lista de Bodas</a></li>
+        </ul>
+          <ul class="nav__list">
+            <li class="nav__item"><a href="index.html" class="nav__link">Inicio</a></li>
+            <li class="nav__item"><a href="confirmar.html" class="nav__link">Confirmar</a></li>
+            <li class="nav__item"><a href="como-llegar.html" class="nav__link">Cómo Llegar</a></li>
+            <li class="nav__item"><a href="preboda.html" class="nav__link">Preboda</a></li>
+            <li class="nav__item"><a href="regalos.html" class="nav__link">Lista de Bodas</a></li>
+          </ul>
+        <div class="nav__close" id="nav-close"><i class="fas fa-times"></i></div>
+      </div>
+      <div class="nav__toggle" id="nav-toggle"><i class="fas fa-bars"></i></div>
+    </nav>
+  </header>
+
+  <main class="main main--subpage">
+    <section class="timeline-page">
+      <header class="timeline-page__header">
+        <h1 class="timeline-page__names">Pablo y Cris</h1>
+        <p class="timeline-page__date">20 . 06 . 2026</p>
+      </header>
+
+      <div id="timeline-root">
+        <div class="timeline-fallback">
+          <h2 class="timeline-fallback__title">Cómo llegar</h2>
+          <p class="timeline-fallback__lead">Autobuses, ceremonia, celebración… y vuelta. Todo en orden y a tiempo.</p>
+
+          <ul class="timeline-fallback__list">
+              <!-- Autobuses eliminado -->
+            <li class="timeline-fallback__item">
+              <div class="timeline-fallback__img"><img src="images/Iglesia.jpeg" alt="Ceremonia" loading="lazy"></div>
+              <p class="timeline-fallback__time">13:00</p>
+              <div>
+                <p class="timeline-fallback__name">Ceremonia</p>
+                <p class="timeline-fallback__meta">Iglesia de San Pedro</p>
+              </div>
+            </li>
+            <li class="timeline-fallback__item">
+              <div class="timeline-fallback__img"><img src="images/Finca.jpeg" alt="Celebración" loading="lazy"></div>
+              <p class="timeline-fallback__time">14:15</p>
+              <div>
+                <p class="timeline-fallback__name">Celebración</p>
+                <p class="timeline-fallback__meta">Finca El Olivar</p>
+              </div>
+            </li>
+            <li class="timeline-fallback__item">
+              <div class="timeline-fallback__img"><img src="images/image4.png" alt="Vuelta" loading="lazy"></div>
+              <p class="timeline-fallback__time">01:00</p>
+              <div>
+                <p class="timeline-fallback__name">Vuelta</p>
+                <p class="timeline-fallback__meta">Regreso en autobús</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <h3 class="footer__title">Pablo & Cris</h3>
+      <p class="footer__date">20 · 06 · 2026</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script type="module" src="ui/timeline.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmar Asistencia | Pablo & Cris</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💒</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/locations.css">
+  <link rel="stylesheet" href="css/rsvp.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="index.html" class="nav__logo">C & P</a>
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list">
+          <li class="nav__item"><a href="index.html" class="nav__link">Inicio</a></li>
+          <li class="nav__item"><a href="confirmar.html" class="nav__link active">Confirmar</a></li>
+          <li class="nav__item"><a href="como-llegar.html" class="nav__link">Cómo Llegar</a></li>
+          <li class="nav__item"><a href="preboda.html" class="nav__link">Preboda</a></li>
+          <li class="nav__item"><a href="regalos.html" class="nav__link">Lista de Bodas</a></li>
+        </ul>
+        <div class="nav__close" id="nav-close"><i class="fas fa-times"></i></div>
+      </div>
+      <div class="nav__toggle" id="nav-toggle"><i class="fas fa-bars"></i></div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <!-- Hero Section -->
+    <section class="hero hero--subpage" id="inicio" style="background-image: url('images/image3.png');">
+      <div class="hero__overlay"></div>
+      <div class="hero__content">
+        <p class="hero__subtitle anim-fade-down">¡Te esperamos!</p>
+        <h1 class="hero__title anim-fade-up">Confirmar Asistencia</h1>
+        <div class="hero__line anim-scale-x"></div>
+      </div>
+      <a href="#rsvp" class="hero__scroll anim-bounce"><i class="fas fa-chevron-down"></i></a>
+    </section>
+
+    <section class="rsvp-section" id="rsvp">
+      <div class="container">
+        <p class="rsvp-intro" style="text-align:center; margin-bottom:2.5rem;">
+          Por favor, confirma tu asistencia antes del <strong>15 de Mayo de 2026</strong> para que podamos organizarlo todo con cariño.
+        </p>
+        <form class="rsvp-form" id="rsvp-form">
+            <div class="form__group">
+              <label for="nombre" class="form__label"><i class="fas fa-user"></i> Nombre y Apellidos *</label>
+              <input type="text" id="nombre" name="nombre" class="form__input" placeholder="Tu nombre completo" required>
+            </div>
+            
+            <div class="form__group">
+              <label class="form__label"><i class="fas fa-church"></i> Confirmar Asistencia a la Boda *</label>
+              <div class="form__radio-group">
+                <label class="form__radio">
+                  <input type="radio" name="asistenciaBoda" value="Sí" required>
+                  <span class="form__radio-label">¡Sí, allí estaré!</span>
+                </label>
+                <label class="form__radio">
+                  <input type="radio" name="asistenciaBoda" value="No">
+                  <span class="form__radio-label">No podré asistir</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="form__group">
+              <label class="form__label"><i class="fas fa-users"></i> ¿Vendrás con acompañante?</label>
+              <div class="form__radio-group">
+                <label class="form__radio">
+                  <input type="radio" name="acompanante" value="Sí">
+                  <span class="form__radio-label">Sí</span>
+                </label>
+                <label class="form__radio">
+                  <input type="radio" name="acompanante" value="No">
+                  <span class="form__radio-label">No</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="form__group" id="acompanante-nombre-group" style="display: none;">
+              <label for="nombreAcompanante" class="form__label"><i class="fas fa-user-friends"></i> Nombre del Acompañante</label>
+              <input type="text" id="nombreAcompanante" name="nombreAcompanante" class="form__input" placeholder="Nombre completo del acompañante">
+            </div>
+            
+            <div class="form__group">
+              <label class="form__label"><i class="fas fa-bus"></i> Confirmar uso de Bus</label>
+              <div class="form__radio-group">
+                <label class="form__radio">
+                  <input type="radio" name="bus" value="Sí">
+                  <span class="form__radio-label">Sí</span>
+                </label>
+                <label class="form__radio">
+                  <input type="radio" name="bus" value="No">
+                  <span class="form__radio-label">Iré por mi cuenta</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="form__group">
+              <label for="alergias" class="form__label"><i class="fas fa-allergies"></i> Alergia/Intolerancias</label>
+              <textarea id="alergias" name="alergias" class="form__textarea" placeholder="Cuéntanos si tienes alguna alergia, intolerancia o dieta especial..." rows="3"></textarea>
+            </div>
+            
+            <div class="form__group">
+              <label class="form__label"><i class="fas fa-glass-cheers"></i> Asistencia a la Preboda</label>
+              <div class="form__radio-group">
+                <label class="form__radio">
+                  <input type="radio" name="asistenciaPreboda" value="Sí">
+                  <span class="form__radio-label">¡Sí, me apunto!</span>
+                </label>
+                <label class="form__radio">
+                  <input type="radio" name="asistenciaPreboda" value="No">
+                  <span class="form__radio-label">No</span>
+                </label>
+              </div>
+            </div>
+            
+            <button type="submit" class="form__submit" id="submit-btn">
+              <span class="form__submit-text">Enviar Confirmación</span>
+              <span class="form__submit-loading"><i class="fas fa-spinner fa-spin"></i> Enviando...</span>
+              <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <h3 class="footer__title">Pablo & Cris</h3>
+      <p class="footer__date">20 · 06 · 2026</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="js/script.js"></script>
+  <script>
+    // Mostrar/ocultar campo de nombre del acompañante
+    document.querySelectorAll('input[name="acompanante"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const group = document.getElementById('acompanante-nombre-group');
+        const input = document.getElementById('nombreAcompanante');
+        if (this.value === 'Sí') {
+          group.style.display = 'block';
+        } else {
+          group.style.display = 'none';
+          input.value = ''; // Limpiar el campo si se selecciona No
+        }
+      });
+    });
+  </script>
+</body>
+</html>

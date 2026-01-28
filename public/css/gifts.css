@@ -1,0 +1,184 @@
+/* ============================================
+   GIFTS PAGE (Regalos) - Minimal & Elegant
+============================================= */
+
+.gifts-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: var(--header-height);
+  background-color: #fcfbf9;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative background element */
+.gifts-page::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(139, 154, 125, 0.05) 0%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.gifts-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Image Section */
+.gifts-image-wrapper {
+  position: relative;
+  height: 600px;
+  border-radius: 200px 200px 0 0; /* Arch shape */
+  overflow: hidden;
+}
+
+.gifts-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.5s ease;
+}
+
+.gifts-image-wrapper:hover .gifts-image {
+  transform: scale(1.05);
+}
+
+/* Content Section */
+.gifts-content {
+  padding: 2rem;
+  text-align: left;
+}
+
+.gifts-subtitle {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.gifts-title {
+  font-family: var(--font-title);
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  color: var(--color-primary-dark);
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+
+.gifts-text {
+  font-size: 1.1rem;
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+  max-width: 500px;
+  line-height: 1.8;
+}
+
+.gifts-highlight {
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--color-secondary-dark);
+  margin-bottom: 3rem;
+  display: block;
+}
+
+/* IBAN Section - Minimal */
+.iban-minimal {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.iban-label {
+  display: block;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-light);
+  margin-bottom: 0.5rem;
+}
+
+.iban-number-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.iban-number {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  color: var(--color-text-dark);
+  letter-spacing: -0.5px;
+  font-weight: 600;
+}
+
+.btn-copy-minimal {
+  background: none;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-copy-minimal:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: rotate(15deg);
+}
+
+.btn-copy-minimal.copied {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .gifts-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-top: 2rem;
+  }
+
+  .gifts-image-wrapper {
+    height: 400px;
+    order: -1;
+  }
+
+  .gifts-content {
+    text-align: center;
+    padding: 0;
+  }
+
+  .gifts-text {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .iban-number-wrapper {
+    justify-content: center;
+  }
+}

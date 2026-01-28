@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Boda de Pablo y Cris - 20 de Junio de 2026">
+  <title>Pablo & Cris | Nuestra Boda</title>
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💒</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="index.html" class="nav__logo">C & P</a>
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list">
+          <li class="nav__item"><a href="index.html" class="nav__link active">Inicio</a></li>
+          <li class="nav__item"><a href="confirmar.html" class="nav__link">Confirmar</a></li>
+          <li class="nav__item"><a href="como-llegar.html" class="nav__link">Cómo Llegar</a></li>
+          <li class="nav__item"><a href="preboda.html" class="nav__link">Preboda</a></li>
+          <li class="nav__item"><a href="regalos.html" class="nav__link">Lista de Bodas</a></li>
+        </ul>
+        <div class="nav__close" id="nav-close"><i class="fas fa-times"></i></div>
+      </div>
+      <div class="nav__toggle" id="nav-toggle"><i class="fas fa-bars"></i></div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <section class="hero" id="inicio" style="background-image: url('images/Principal.jpeg');">
+      <div class="hero__overlay"></div>
+      <div class="hero__content">
+        <p class="hero__subtitle anim-fade-down">Nos casamos</p>
+        <h1 class="hero__title anim-fade-up">
+          <span class="hero__name">Cris</span>
+          <span class="hero__ampersand">&</span>
+          <span class="hero__name">Pablo</span>
+        </h1>
+        <div class="hero__line anim-scale-x"></div>
+        <p class="hero__date anim-fade-up">20 · 06 · 2026</p>
+        
+        <div class="countdown anim-fade-up" id="countdown">
+          <div class="countdown__item">
+            <span class="countdown__number" id="days">000</span>
+            <span class="countdown__label">días</span>
+          </div>
+          <span class="countdown__separator">:</span>
+          <div class="countdown__item">
+            <span class="countdown__number" id="hours">00</span>
+            <span class="countdown__label">horas</span>
+          </div>
+          <span class="countdown__separator">:</span>
+          <div class="countdown__item">
+            <span class="countdown__number" id="minutes">00</span>
+            <span class="countdown__label">min</span>
+          </div>
+          <span class="countdown__separator">:</span>
+          <div class="countdown__item">
+            <span class="countdown__number" id="seconds">00</span>
+            <span class="countdown__label">seg</span>
+          </div>
+        </div>
+        
+        <a href="confirmar.html" class="hero__btn anim-fade-up">
+          <span>Confirmar Asistencia</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+      <a href="#historia" class="hero__scroll anim-bounce"><i class="fas fa-chevron-down"></i></a>
+    </section>
+
+    <section class="section historia" id="historia">
+      <div class="container">
+        <span class="section__subtitle reveal">Nuestra</span>
+        <h2 class="section__title reveal">Historia</h2>
+        <div class="historia__content reveal">
+          <p class="historia__text">
+            Todo comenzó cuando nuestras miradas se cruzaron por primera vez. 
+            Desde entonces, cada día ha sido una nueva aventura juntos.
+          </p>
+          <p class="historia__text">
+            Después de años de risas, viajes y sueños compartidos, 
+            hemos decidido dar el paso más importante de nuestras vidas.
+          </p>
+          <p class="historia__text highlight">
+            Queremos celebrar este momento rodeados de las personas que más queremos. 
+            ¡Y tú eres una de ellas!
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 3D Scroll Gallery Section -->
+    <section class="gallery3d-section" id="gallery3d-container">
+      <!-- Three.js canvas will be inserted here -->
+      
+      <!-- Scroll hint indicator -->
+      <div class="gallery3d-scroll-hint" id="gallery-scroll-hint">
+        <div class="gallery3d-scroll-hint__icon"></div>
+        <span class="gallery3d-scroll-hint__text">Scroll</span>
+      </div>
+      
+      <!-- End message - appears at end of parallax -->
+      <div class="gallery3d-end-message" id="gallery-end-message">
+        <h3 class="gallery3d-end-message__title">¡Esperamos verte!</h3>
+        <p class="gallery3d-end-message__subtitle">Será un día muy especial</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <h3 class="footer__title">Pablo & Cris</h3>
+      <p class="footer__date">20 · 06 · 2026</p>
+      <p class="footer__message reveal">Gracias por ser parte de nuestra historia</p>
+    </div>
+  </footer>
+
+  <!-- Three.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- 3D Gallery Script -->
+  <script src="js/gallery3d.js"></script>
+  <!-- Main Script -->
+  <script src="js/script.js"></script>
+  <script>
+    // Initialize 3D Gallery after page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof initGallery3D === 'function') {
+        initGallery3D();
+      }
+      
+      // Gallery scroll hint visibility
+      const gallerySection = document.getElementById('gallery3d-container');
+      const scrollHint = document.getElementById('gallery-scroll-hint');
+      
+      if (gallerySection && scrollHint) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              gallerySection.classList.add('in-view');
+              scrollHint.classList.add('visible');
+              
+              // Hide after some scroll
+              setTimeout(() => {
+                window.addEventListener('scroll', function hideHint() {
+                  const rect = gallerySection.getBoundingClientRect();
+                  if (rect.top < window.innerHeight * 0.3) {
+                    scrollHint.classList.remove('visible');
+                    window.removeEventListener('scroll', hideHint);
+                  }
+                }, { passive: true });
+              }, 500);
+            } else {
+              gallerySection.classList.remove('in-view');
+              scrollHint.classList.remove('visible');
+            }
+          });
+        }, { threshold: 0.1 });
+        
+        observer.observe(gallerySection);
+      }
+      
+      // Gallery end message visibility
+      const endMessage = document.getElementById('gallery-end-message');
+      if (gallerySection && endMessage) {
+        window.addEventListener('scroll', () => {
+          const rect = gallerySection.getBoundingClientRect();
+          const sectionHeight = gallerySection.offsetHeight;
+          const scrolled = -rect.top;
+          const progress = scrolled / (sectionHeight - window.innerHeight);
+          
+          // Show message when near the end (80%+) - stays visible once shown
+          if (progress > 0.80) {
+            endMessage.classList.add('visible');
+          } else {
+            endMessage.classList.remove('visible');
+          }
+        }, { passive: true });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+/* Motion layer for como-llegar (anime.js driven). Minimal + editorial.
+   Animations are enabled only when JS adds .motion-enabled to <html>.
+*/
+
+/* --- Image wipe overlay element --- */
+.location-card__image {
+  position: relative;
+}
+
+.location-card__wipe {
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg);
+  transform: translateX(0%);
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* subtle edge so the wipe feels like paper */
+.location-card__wipe::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 18px;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0,0,0,0), rgba(0,0,0,0.06));
+  opacity: 0.35;
+}
+
+/* --- Initial states (only when motion is enabled) --- */
+html.motion-enabled .hero__subtitle,
+html.motion-enabled .hero__title,
+html.motion-enabled .hero__line,
+html.motion-enabled .hero__scroll {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+}
+
+html.motion-enabled .hero__line {
+  transform: scaleX(0);
+  transform-origin: center;
+}
+
+html.motion-enabled .location-card {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+}
+
+html.motion-enabled .location-card--reverse {
+  transform: translate3d(0, 16px, 0);
+}
+
+html.motion-enabled .location-card__image img {
+  opacity: 0;
+  transform: translate3d(0, 0, 0) scale(1.06);
+  will-change: transform, opacity;
+}
+
+html.motion-enabled .location-card__subtitle,
+html.motion-enabled .location-card__title,
+html.motion-enabled .location-card__text,
+html.motion-enabled .location-card .btn {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  will-change: transform, opacity;
+}
+
+/* --- Micro underline for the CTA (CSS only) --- */
+.location-card .btn.btn--outline {
+  position: relative;
+}
+
+.location-card .btn.btn--outline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.35;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 350ms ease;
+}
+
+.location-card .btn.btn--outline:hover::after {
+  transform: scaleX(1);
+}
+
+/* --- Reduced motion: no hiding, no wipe. --- */
+@media (prefers-reduced-motion: reduce) {
+  html.motion-enabled .hero__subtitle,
+  html.motion-enabled .hero__title,
+  html.motion-enabled .hero__line,
+  html.motion-enabled .hero__scroll,
+  html.motion-enabled .location-card,
+  html.motion-enabled .location-card__image img,
+  html.motion-enabled .location-card__subtitle,
+  html.motion-enabled .location-card__title,
+  html.motion-enabled .location-card__text,
+  html.motion-enabled .location-card .btn {
+    opacity: 1;
+    transform: none;
+  }
+
+  .location-card__wipe {
+    display: none;
+  }
+}

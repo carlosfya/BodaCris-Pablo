@@ -1,0 +1,128 @@
+/* ============================================
+   LOCATIONS (Cómo Llegar)
+============================================= */
+.hero--subpage {
+  height: 60vh;
+  min-height: 400px;
+  background-image: url('../images/image6.png'); /* Default fallback */
+  background-size: cover;
+  background-position: center;
+}
+
+.locations {
+  padding-top: 4rem;
+}
+
+.location-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-bottom: 8rem;
+}
+
+.location-card:last-child {
+  margin-bottom: 0;
+}
+
+.location-card--reverse {
+  direction: rtl;
+}
+
+.location-card--reverse .location-card__content {
+  direction: ltr;
+}
+
+.location-card__image {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-medium);
+  height: 500px; /* Taller images for focus */
+}
+
+.location-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.location-card:hover .location-card__image img {
+  transform: scale(1.05);
+}
+
+.location-card__content {
+  padding: 2rem;
+}
+
+.location-card__subtitle {
+  display: block;
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  color: var(--color-secondary-dark);
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.location-card__title {
+  font-family: var(--font-title);
+  font-size: 3rem;
+  color: var(--color-primary-dark);
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.location-card__text {
+  margin-bottom: 2.5rem;
+  color: var(--color-text-light);
+  font-size: 1.1rem;
+}
+
+.btn--outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 2.5rem;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  border-radius: 50px;
+  transition: var(--transition);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+}
+
+.btn--outline:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-soft);
+}
+
+@media (max-width: 968px) {
+  .location-card {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 5rem;
+  }
+  
+  .location-card--reverse {
+    direction: ltr;
+  }
+  
+  .location-card__image {
+    height: 350px;
+    order: -1; /* Image always on top on mobile */
+  }
+  
+  .location-card__content {
+    padding: 0;
+    text-align: center;
+  }
+  
+  .location-card__title {
+    font-size: 2.5rem;
+  }
+}

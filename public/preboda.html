@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preboda | Pablo & Cris</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💒</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/locations.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+</head>
+<body class="page-subpage preboda-bg">
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="index.html" class="nav__logo">C & P</a>
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list">
+          <li class="nav__item"><a href="index.html" class="nav__link">Inicio</a></li>
+          <li class="nav__item"><a href="confirmar.html" class="nav__link">Confirmar</a></li>
+          <li class="nav__item"><a href="como-llegar.html" class="nav__link">Cómo Llegar</a></li>
+          <li class="nav__item"><a href="preboda.html" class="nav__link active">Preboda</a></li>
+          <li class="nav__item"><a href="regalos.html" class="nav__link">Lista de Bodas</a></li>
+        </ul>
+        <div class="nav__close" id="nav-close"><i class="fas fa-times"></i></div>
+      </div>
+      <div class="nav__toggle" id="nav-toggle"><i class="fas fa-bars"></i></div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <style>
+      /* Full-page background for preboda (applies to body via class) */
+      .preboda-bg {
+        background-image: url('images/FondoPreboda.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+      }
+      /* subtle overlay to improve readability */
+      .preboda-bg::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(rgba(250,245,240,0.48), rgba(250,245,240,0.28));
+        pointer-events: none;
+        z-index: 0;
+      }
+      /* Keep footer solid and compact */
+      .preboda-bg .footer { background: #000; color: #fff; padding: 1.6rem 0; position:relative; z-index:2; }
+      .preboda-bg .footer .footer__title,
+      .preboda-bg .footer .footer__date { color: rgba(255,255,255,0.95); }
+      .preboda-bg .footer .container { display:flex; flex-direction:column; align-items:center; gap:0.25rem; }
+
+      /* Make logo and hamburger/close icons black on this page */
+      .preboda-bg .nav__logo,
+      .preboda-bg .nav__toggle,
+      .preboda-bg .nav__close { color: #000 !important; }
+      .preboda-bg .nav__toggle i,
+      .preboda-bg .nav__close i { color: #000 !important; }
+
+      .preboda-simple .container { position: relative; z-index:2; }
+      .preboda-simple .preboda-card { max-width:760px; text-align:center; margin-top:0.75rem; }
+      .preboda-place-img { width:100%; max-width:1000px; border-radius:16px; box-shadow: var(--shadow-medium); display:block; }
+      .preboda-datetime { font-weight:600; color:var(--color-primary-dark); letter-spacing:0.02em; }
+      .map-link { display:inline-flex; align-items:center; gap:0.5rem; padding:0.55rem 1rem; border-radius:999px; border:1px solid rgba(var(--color-primary-rgb),0.12); color:var(--color-primary-dark); text-decoration:none; font-weight:600; transition: var(--transition); }
+      .map-link:hover { background:var(--color-primary); color:var(--color-white); border-color:transparent; }
+      @media (max-width:600px){ .preboda-simple { padding:2rem 1rem; } }
+    </style>
+
+    <section class="section preboda-simple" id="preboda-event">
+      <div class="container" style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;padding:4rem 0;">
+        <img src="images/Preboda.jpeg" alt="Lugar Preboda" class="preboda-place-img">
+
+        <div class="preboda-card">
+          <h1 class="section__title">Preboda</h1>
+          <p class="preboda-datetime">Viernes, 19 de Junio · 20:00</p>
+          <p style="color:var(--color-text-light); margin-top:1rem; max-width:650px;">Te invitamos a una reunión informal con cañas y tapas el día antes de la boda. Será un momento relajado para encontrarnos antes del gran día.</p>
+          <p style="margin-top:1.25rem;"><a href="https://maps.app.goo.gl/7q3fK8gHkvWXtTZ97" target="_blank" rel="noopener" class="map-link">Ver en Google Maps <i class="fas fa-external-link-alt" style="font-size:0.85rem"></i></a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <h3 class="footer__title">Pablo & Cris</h3>
+      <p class="footer__date">20 · 06 · 2026</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

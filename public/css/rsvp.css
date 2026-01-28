@@ -1,0 +1,211 @@
+/* ============================================
+   RSVP PAGE STYLES
+============================================= */
+
+.rsvp-section {
+  padding-top: 4rem;
+  padding-bottom: 6rem;
+  background-color: var(--color-bg);
+}
+
+.rsvp-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: var(--color-white);
+  padding: clamp(2rem, 5vw, 4rem);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-medium);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative border/corner */
+.rsvp-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+}
+
+.rsvp-intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.rsvp-intro p {
+  color: var(--color-text-light);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.rsvp-intro strong {
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+/* Form Styles */
+.form__group {
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.form__label {
+  display: block;
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  color: var(--color-text-dark);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.form__label i {
+  color: var(--color-secondary);
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.form__input,
+.form__textarea {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text);
+  background-color: var(--color-bg-alt);
+  transition: var(--transition);
+}
+
+.form__input:focus,
+.form__textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background-color: var(--color-white);
+  box-shadow: 0 0 0 4px rgba(139, 154, 125, 0.1);
+}
+
+.form__textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Custom Radio Buttons */
+.form__radio-group {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.form__radio {
+  position: relative;
+  cursor: pointer;
+}
+
+.form__radio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.form__radio-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: var(--color-bg-alt);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-weight: 500;
+  color: var(--color-text-light);
+  transition: var(--transition);
+  text-align: center;
+}
+
+/* Selected State */
+.form__radio input:checked ~ .form__radio-label {
+  background-color: rgba(139, 154, 125, 0.1);
+  border-color: var(--color-primary);
+  color: var(--color-primary-dark);
+}
+
+/* Hover State */
+.form__radio:hover .form__radio-label {
+  background-color: #eaeaea;
+}
+
+.form__radio input:checked:hover ~ .form__radio-label {
+  background-color: rgba(139, 154, 125, 0.15);
+}
+
+/* Submit Button */
+.form__submit {
+  width: 100%;
+  padding: 1.2rem;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.form__submit:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-medium);
+}
+
+.form__submit:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form__submit-loading {
+  display: none;
+}
+
+.loading .form__submit-text,
+.loading .fa-paper-plane {
+  display: none;
+}
+
+.loading .form__submit-loading {
+  display: inline-block;
+}
+
+@media (max-width: 600px) {
+  .form__radio-group {
+    flex-direction: row;
+    gap: 1rem;
+  }
+  
+  .rsvp-container {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* Disable movement/animations for the confirm card/form */
+.rsvp-form,
+.rsvp-form * {
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
+}
