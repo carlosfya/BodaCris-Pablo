@@ -222,17 +222,48 @@
       backdrop-filter: none;
     }
     
-    .header .nav__logo,
-    .header .nav__link,
+    /* Solo los elementos visibles en desktop sobre el canvas son blancos */
+    .header .nav__logo {
+      color: var(--color-white) !important;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    
     .header .nav__toggle i {
       color: var(--color-white) !important;
       text-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
     
-    .header .nav__link:hover,
-    .header .nav__link.active {
-      color: var(--color-white) !important;
-      opacity: 0.8;
+    /* El menú sidebar mantiene sus estilos normales del sidebar.css */
+    /* (fondo con imagen del pavo real) */
+    
+    .nav__link {
+      color: var(--color-text) !important;
+      text-shadow: none !important;
+    }
+    
+    .nav__link:hover,
+    .nav__link.active {
+      color: var(--color-primary-dark) !important;
+      opacity: 1 !important;
+    }
+    
+    .nav__close i {
+      color: var(--color-text) !important;
+      text-shadow: none !important;
+    }
+    
+    /* En desktop, los links visibles son blancos */
+    @media screen and (min-width: 769px) {
+      .nav__link {
+        color: var(--color-white) !important;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      }
+      
+      .nav__link:hover,
+      .nav__link.active {
+        color: var(--color-white) !important;
+        opacity: 0.8 !important;
+      }
     }
     
     /* Footer styling */
