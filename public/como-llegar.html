@@ -14,12 +14,265 @@
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/locations.css">
-  <link rel="stylesheet" href="css/como-llegar.motion.css">
   <link rel="stylesheet" href="css/sidebar.css">
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    /* ============================================
+       CANVAS SCROLLYTELLING STYLES
+    ============================================= */
+    
+    /* Loading Screen */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--color-bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    
+    .loader__spinner {
+      width: 60px;
+      height: 60px;
+      border: 3px solid var(--color-bg-dark);
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .loader__text {
+      margin-top: 1.5rem;
+      font-family: var(--font-title);
+      font-size: 1.5rem;
+      color: var(--color-text);
+      letter-spacing: 0.05em;
+    }
+    
+    .loader__progress {
+      margin-top: 0.5rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--color-text-light);
+    }
+    
+    /* Scroll Container */
+    .scroll-container {
+      position: relative;
+      height: 500vh; /* Long scroll distance for smooth animation */
+      width: 100%;
+    }
+    
+    /* Fixed Canvas */
+    .canvas-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    
+    #frameCanvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    
+    /* Overlay UI - Minimalista */
+    .location-overlay {
+      position: fixed;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem 1rem 0.6rem 0.75rem;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .location-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+    }
+    
+    /* Church Overlay - Bottom Left */
+    .overlay--iglesia {
+      bottom: 8%;
+      left: 1.5rem;
+    }
+    
+    /* Finca Overlay - Bottom Right */
+    .overlay--finca {
+      bottom: 8%;
+      right: 1.5rem;
+    }
+    
+    .overlay__icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      color: var(--color-primary-dark);
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    
+    .overlay__text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    
+    .overlay__title {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    
+    .overlay__name {
+      font-family: var(--font-title);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--color-white);
+      line-height: 1.2;
+    }
+    
+    .location-overlay:hover {
+      background: rgba(255,255,255,0.22);
+      transform: translateY(-2px);
+    }
+    
+    /* Scroll Indicator - Solo flecha minimalista */
+    .scroll-indicator {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.6);
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+    
+    .scroll-indicator.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .scroll-indicator__arrow {
+      font-size: 1rem;
+      animation: float 2s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(6px); opacity: 1; }
+    }
+    
+    /* Progress Bar */
+    .progress-bar {
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+      z-index: 100;
+      transition: width 0.1s linear;
+    }
+    
+    /* Navbar stays on top - transparent over canvas */
+    .header {
+      z-index: 1000 !important;
+      background: transparent !important;
+      backdrop-filter: none;
+    }
+    
+    .header .nav__logo,
+    .header .nav__link,
+    .header .nav__toggle i {
+      color: var(--color-white) !important;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    
+    .header .nav__link:hover,
+    .header .nav__link.active {
+      color: var(--color-white) !important;
+      opacity: 0.8;
+    }
+    
+    /* Footer styling */
+    .footer-section {
+      position: relative;
+      z-index: 20;
+      background: var(--color-bg);
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      .overlay--iglesia,
+      .overlay--finca {
+        left: 1rem;
+        right: 1rem;
+        bottom: 6%;
+      }
+      
+      .scroll-container {
+        height: 400vh;
+      }
+      
+      .overlay__name {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Loading Screen -->
+  <div class="loader" id="loader">
+    <div class="loader__spinner"></div>
+    <p class="loader__text">Preparando el viaje...</p>
+    <p class="loader__progress" id="loaderProgress">0%</p>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
   <header class="header" id="header">
     <nav class="nav container">
       <a href="index.html" class="nav__logo">C & P</a>
@@ -38,162 +291,223 @@
   </header>
 
   <main class="main">
-    <!-- Redesigned Como Llegar: fondo completo y dos lugares posicionables -->
-    <style>
-      /* Background image for this page */
-      .como-bg {
-        background-image: url('images/FondoComoLlegar.png');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-      }
+    <!-- Canvas Container -->
+    <div class="canvas-wrapper">
+      <canvas id="frameCanvas"></canvas>
+    </div>
 
-      /* Stage holds the positioned places; variables allow easy manual adjustments */
-      .map-stage {
-        position: relative;
-        min-height: calc(100dvh - var(--header-height));
-        display: block;
-        padding-top: calc(var(--header-height) + 2rem);
-        --iglesia-top: 10%;
-        /* adjust this to move Iglesia vertically */
-        --iglesia-right: 20%;
-        /* adjust this to move Iglesia horizontally */
-        --finca-bottom: 0%;
-        /* adjust this to move Finca vertically */
-        --finca-left: 40%;
-        /* adjust this to move Finca horizontally */
-      }
+    <!-- Scroll Container (creates the scroll distance) -->
+    <div class="scroll-container" id="scrollContainer">
+      
+      <!-- Church Overlay (Start) -->
+      <a class="location-overlay overlay--iglesia" id="overlayIglesia" href="https://maps.google.com?q=Iglesia+de+San+Pedro" target="_blank" rel="noopener">
+        <span class="overlay__icon"><i class="fas fa-map-marker-alt"></i></span>
+        <span class="overlay__text">
+          <span class="overlay__title">Ceremonia</span>
+          <span class="overlay__name">Iglesia de San Pedro</span>
+        </span>
+      </a>
 
-      .place {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        max-width: 420px;
-        width: clamp(220px, 36vw, 420px);
-        display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
-        align-items: center;
-        text-align: center;
-      }
+      <!-- Finca Overlay (End) -->
+      <a class="location-overlay overlay--finca hidden" id="overlayFinca" href="https://maps.google.com?q=Finca+El+Olivar" target="_blank" rel="noopener">
+        <span class="overlay__icon"><i class="fas fa-map-marker-alt"></i></span>
+        <span class="overlay__text">
+          <span class="overlay__title">Celebración</span>
+          <span class="overlay__name">Finca El Olivar</span>
+        </span>
+      </a>
 
-      /* Iglesia: positioned using the CSS vars above (top-right) */
-      .place--iglesia {
-        top: var(--iglesia-top);
-        right: var(--iglesia-right);
-        transform: translate(50%, 0);
-      }
-
-      /* Finca: positioned bottom-left */
-      .place--finca {
-        bottom: var(--finca-bottom);
-        left: var(--finca-left);
-        transform: translate(0, 50%);
-      }
-
-      .place__image {
-        width: 100%;
-        border-radius: 16px;
-        box-shadow: var(--shadow-medium);
-        overflow: hidden;
-        border: 6px solid rgba(255, 255, 255, 0.85);
-      }
-
-      .place__image img {
-        display: block;
-        width: 100%;
-        height: auto;
-      }
-
-      .place__title {
-        font-family: var(--font-title);
-        font-size: clamp(1.25rem, 2.4vw, 1.75rem);
-        color: var(--color-text-dark);
-        background: rgba(255, 255, 255, 0.85);
-        padding: 0.6rem 1rem;
-        border-radius: 999px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-        display: inline-flex;
-        gap: 0.6rem;
-        align-items: center;
-      }
-
-      .place__link {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.45rem 0.9rem;
-        border-radius: 999px;
-        border: 1px solid rgba(0, 0, 0, 0.06);
-        background: rgba(255, 255, 255, 0.9);
-        color: var(--color-primary-dark);
-        font-weight: 600;
-        text-decoration: none;
-        transition: var(--transition);
-      }
-
-      .place__link:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-medium);
-      }
-
-      /* Ensure content sits above the background overlay */
-      .map-stage,
-      .map-stage * {
-        z-index: 2;
-        position: relative;
-      }
-
-      /* Footer should remain as usual (solid) */
-      footer.footer {
-        position: relative;
-        z-index: 3;
-      }
-
-      @media (max-width: 900px) {
-        .place {
-          width: clamp(200px, 60vw, 360px);
-        }
-
-        .place--iglesia {
-          transform: translate(40%, 0);
-        }
-
-        .place--finca {
-          transform: translate(0, 40%);
-        }
-      }
-    </style>
-
-    <section class="map-stage como-bg" id="locations">
-      <!-- Top-right: Iglesia -->
-      <div class="place place--iglesia" id="place-iglesia" title="Ajusta posición con CSS variables">
-
-        <div class="place__title">Iglesia de San Pedro</div>
-        <a class="place__link" href="https://maps.google.com?q=Iglesia+de+San+Pedro" target="_blank" rel="noopener">Ver
-          en Google Maps <i class="fas fa-external-link-alt" style="font-size:0.85rem"></i></a>
+      <!-- Scroll Indicator -->
+      <div class="scroll-indicator" id="scrollIndicator">
+        <i class="fas fa-chevron-down scroll-indicator__arrow"></i>
       </div>
-
-      <!-- Bottom-left: Finca -->
-      <div class="place place--finca" id="place-finca" title="Ajusta posición con CSS variables">
-
-        <div class="place__title">Finca El Olivar</div>
-        <a class="place__link" href="https://maps.google.com?q=Finca+El+Olivar" target="_blank" rel="noopener">Ver en
-          Google Maps <i class="fas fa-external-link-alt" style="font-size:0.85rem"></i></a>
-      </div>
-
-    </section>
+      
+    </div>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <h3 class="footer__title">Pablo & Cris</h3>
-      <p class="footer__date">20 · 06 · 2026</p>
-    </div>
-  </footer>
-
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-  <script defer src="js/como-llegar.motion.js"></script>
   <script src="js/script.js"></script>
+  <script>
+    // ============================================
+    // CANVAS SCROLLYTELLING - IMAGE SEQUENCE
+    // ============================================
+    
+    (function() {
+      'use strict';
+      
+      // ========== CONFIGURATION ==========
+      const frameCount = 161;  // Total number of frames
+      const framePath = 'images/video_trayecto/ezgif-frame-';  // Path pattern
+      const frameExtension = '.jpg';
+      
+      // Pad frame number to 3 digits (001, 002, etc.)
+      const getFramePath = (index) => {
+        const frameNumber = String(index + 1).padStart(3, '0');
+        return `${framePath}${frameNumber}${frameExtension}`;
+      };
+      
+      // ========== DOM ELEMENTS ==========
+      const canvas = document.getElementById('frameCanvas');
+      const ctx = canvas.getContext('2d');
+      const loader = document.getElementById('loader');
+      const loaderProgress = document.getElementById('loaderProgress');
+      const progressBar = document.getElementById('progressBar');
+      const overlayIglesia = document.getElementById('overlayIglesia');
+      const overlayFinca = document.getElementById('overlayFinca');
+      const scrollIndicator = document.getElementById('scrollIndicator');
+      const scrollContainer = document.getElementById('scrollContainer');
+      
+      // ========== STATE ==========
+      const images = [];
+      let currentFrame = 0;
+      let imagesLoaded = 0;
+      let isReady = false;
+      
+      // ========== CANVAS RESIZE (object-fit: cover) ==========
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        if (isReady && images[currentFrame]) {
+          drawFrame(currentFrame);
+        }
+      }
+      
+      // Draw frame with cover behavior
+      function drawFrame(frameIndex) {
+        const img = images[frameIndex];
+        if (!img || !img.complete) return;
+        
+        const canvasRatio = canvas.width / canvas.height;
+        const imgRatio = img.width / img.height;
+        
+        let drawWidth, drawHeight, offsetX, offsetY;
+        
+        if (imgRatio > canvasRatio) {
+          // Image is wider - fit by height, crop sides
+          drawHeight = canvas.height;
+          drawWidth = img.width * (canvas.height / img.height);
+          offsetX = (canvas.width - drawWidth) / 2;
+          offsetY = 0;
+        } else {
+          // Image is taller - fit by width, crop top/bottom
+          drawWidth = canvas.width;
+          drawHeight = img.height * (canvas.width / img.width);
+          offsetX = 0;
+          offsetY = (canvas.height - drawHeight) / 2;
+        }
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+      }
+      
+      // ========== PRELOAD IMAGES ==========
+      function preloadImages() {
+        return new Promise((resolve) => {
+          for (let i = 0; i < frameCount; i++) {
+            const img = new Image();
+            img.src = getFramePath(i);
+            
+            img.onload = () => {
+              imagesLoaded++;
+              const progress = Math.round((imagesLoaded / frameCount) * 100);
+              loaderProgress.textContent = `${progress}%`;
+              
+              if (imagesLoaded === frameCount) {
+                resolve();
+              }
+            };
+            
+            img.onerror = () => {
+              console.warn(`Failed to load frame: ${getFramePath(i)}`);
+              imagesLoaded++;
+              if (imagesLoaded === frameCount) {
+                resolve();
+              }
+            };
+            
+            images[i] = img;
+          }
+        });
+      }
+      
+      // ========== SCROLL ANIMATION SETUP ==========
+      function initScrollAnimation() {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Main timeline for frame sequence
+        const frameAnimation = { frame: 0 };
+        
+        gsap.to(frameAnimation, {
+          frame: frameCount - 1,
+          snap: 'frame',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: scrollContainer,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 0.5, // Smooth scrubbing
+            onUpdate: (self) => {
+              const progress = self.progress;
+              
+              // Update current frame
+              currentFrame = Math.round(frameAnimation.frame);
+              drawFrame(currentFrame);
+              
+              // Update progress bar
+              progressBar.style.width = `${progress * 100}%`;
+              
+              // Handle overlay visibility
+              if (progress < 0.1) {
+                // Show church overlay at start
+                overlayIglesia.classList.remove('hidden');
+                overlayFinca.classList.add('hidden');
+                scrollIndicator.classList.remove('hidden');
+              } else if (progress > 0.9) {
+                // Show finca overlay at end
+                overlayIglesia.classList.add('hidden');
+                overlayFinca.classList.remove('hidden');
+                scrollIndicator.classList.add('hidden');
+              } else {
+                // Hide both during journey
+                overlayIglesia.classList.add('hidden');
+                overlayFinca.classList.add('hidden');
+                scrollIndicator.classList.add('hidden');
+              }
+            }
+          }
+        });
+      }
+      
+      // ========== INITIALIZE ==========
+      async function init() {
+        // Set initial canvas size
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Preload all frames
+        await preloadImages();
+        
+        // Mark as ready
+        isReady = true;
+        
+        // Draw first frame
+        drawFrame(0);
+        
+        // Hide loader with animation
+        loader.classList.add('hidden');
+        
+        // Initialize scroll animation
+        initScrollAnimation();
+      }
+      
+      // Start when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+      
+    })();
+  </script>
 </body>
 
 </html>
