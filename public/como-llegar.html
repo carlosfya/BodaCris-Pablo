@@ -362,6 +362,97 @@
       let imagesLoaded = 0;
       let isReady = false;
       
+      // Auto-scroll state
+      let isAutoScrolling = false;
+      let autoScrollSpeed = 1.5; // pixels per frame (~90px/sec at 60fps)
+      let autoScrollRAF = null;
+      let lastScrollY = 0;
+      let userScrollDirection = 0; // 1 = down, -1 = up, 0 = none
+      
+      // ========== AUTO-SCROLL LOGIC ==========
+      function startAutoScroll() {
+        if (isAutoScrolling) return;
+        isAutoScrolling = true;
+        
+        function autoScrollStep() {
+          if (!isAutoScrolling) return;
+          
+          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+          const currentScroll = window.scrollY;
+          
+          // Stop at the end
+          if (currentScroll >= maxScroll - 5) {
+            stopAutoScroll();
+            return;
+          }
+          
+          // Scroll down smoothly
+          window.scrollBy(0, autoScrollSpeed);
+          autoScrollRAF = requestAnimationFrame(autoScrollStep);
+        }
+        
+        autoScrollRAF = requestAnimationFrame(autoScrollStep);
+      }
+      
+      function stopAutoScroll() {
+        isAutoScrolling = false;
+        if (autoScrollRAF) {
+          cancelAnimationFrame(autoScrollRAF);
+          autoScrollRAF = null;
+        }
+      }
+      
+      // Detect user interaction to pause/resume
+      function setupAutoScrollListeners() {
+        // Track scroll direction
+        window.addEventListener('scroll', () => {
+          const currentScrollY = window.scrollY;
+          if (currentScrollY > lastScrollY) {
+            userScrollDirection = 1; // scrolling down
+          } else if (currentScrollY < lastScrollY) {
+            userScrollDirection = -1; // scrolling up
+          }
+          lastScrollY = currentScrollY;
+        }, { passive: true });
+        
+        // Detect first scroll down to start auto-scroll
+        let hasStartedOnce = false;
+        window.addEventListener('scroll', () => {
+          if (!hasStartedOnce && window.scrollY > 50 && userScrollDirection === 1) {
+            hasStartedOnce = true;
+            // Small delay to let user finish their scroll gesture
+            setTimeout(() => {
+              if (userScrollDirection === 1) {
+                startAutoScroll();
+              }
+            }, 300);
+          }
+        }, { passive: true });
+        
+        // Touch/click to pause
+        const pauseEvents = ['touchstart', 'mousedown', 'wheel'];
+        pauseEvents.forEach(event => {
+          window.addEventListener(event, () => {
+            if (isAutoScrolling) {
+              stopAutoScroll();
+            }
+          }, { passive: true });
+        });
+        
+        // Resume on touch end if user scrolled down
+        ['touchend', 'mouseup'].forEach(event => {
+          window.addEventListener(event, () => {
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            // Resume only if not at the end and user was scrolling down
+            setTimeout(() => {
+              if (!isAutoScrolling && window.scrollY > 100 && window.scrollY < maxScroll - 50) {
+                startAutoScroll();
+              }
+            }, 500);
+          }, { passive: true });
+        });
+      }
+      
       // ========== CANVAS RESIZE (object-fit: cover) ==========
       function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -497,6 +588,9 @@
         
         // Initialize scroll animation
         initScrollAnimation();
+        
+        // Setup auto-scroll listeners
+        setupAutoScrollListeners();
       }
       
       // Start when DOM is ready
