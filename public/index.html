@@ -77,21 +77,16 @@
 
     <section class="section historia" id="historia">
       <div class="container">
-        <span class="section__subtitle reveal">Nuestra</span>
-        <h2 class="section__title reveal">Historia</h2>
+        <div class="historia__date-wrapper reveal">
+          <div class="historia__date-line"></div>
+          <time class="historia__date" datetime="2026-06-20">20 de Junio de 2026</time>
+          <div class="historia__date-line"></div>
+        </div>
         <div class="historia__content reveal">
           <p class="historia__text">
-            Todo comenzó cuando nuestras miradas se cruzaron por primera vez. 
-            Desde entonces, cada día ha sido una nueva aventura juntos.
+            Tras 3 preciosos años de noviazgo, Dios nos ha llamado con alegría al matrimonio, que celebraremos el día 20 de Junio en nuestra querida Málaga, ciudad para nosotros muy especial, donde esperamos con emoción veros a todos y compartir juntos este momento tan maravilloso.
           </p>
-          <p class="historia__text">
-            Después de años de risas, viajes y sueños compartidos, 
-            hemos decidido dar el paso más importante de nuestras vidas.
-          </p>
-          <p class="historia__text highlight">
-            Queremos celebrar este momento rodeados de las personas que más queremos. 
-            ¡Y tú eres una de ellas!
-          </p>
+          <p class="historia__closing">¡Os esperamos con mucha ilusión!</p>
         </div>
       </div>
     </section>
@@ -116,9 +111,10 @@
 
   <footer class="footer">
     <div class="container">
-      <h3 class="footer__title">Pablo & Cris</h3>
-      <p class="footer__date">20 · 06 · 2026</p>
-      <p class="footer__message reveal">Gracias por ser parte de nuestra historia</p>
+      <div class="footer__content">
+        <h3 class="footer__title">Pablo & Cris</h3>
+        <time class="footer__date" datetime="2026-06-20">20 · 06 · 2026</time>
+      </div>
     </div>
   </footer>
 
@@ -129,59 +125,78 @@
   <!-- Main Script -->
   <script src="js/script.js"></script>
   <script>
+    // Variable para habilitar/deshabilitar la galería 3D
+    const ENABLE_3D_GALLERY = false;
+    
+    // Ocultar sección de galería inmediatamente si está deshabilitada
+    if (!ENABLE_3D_GALLERY) {
+      const style = document.createElement('style');
+      style.textContent = '.gallery3d-section { display: none !important; min-height: 0 !important; height: 0 !important; padding: 0 !important; margin: 0 !important; }';
+      document.head.appendChild(style);
+    }
+    
     // Initialize 3D Gallery after page loads
     document.addEventListener('DOMContentLoaded', () => {
-      if (typeof initGallery3D === 'function') {
-        initGallery3D();
-      }
-      
-      // Gallery scroll hint visibility
+      // Remover completamente la sección de galería si está deshabilitada
       const gallerySection = document.getElementById('gallery3d-container');
-      const scrollHint = document.getElementById('gallery-scroll-hint');
-      
-      if (gallerySection && scrollHint) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              gallerySection.classList.add('in-view');
-              scrollHint.classList.add('visible');
-              
-              // Hide after some scroll
-              setTimeout(() => {
-                window.addEventListener('scroll', function hideHint() {
-                  const rect = gallerySection.getBoundingClientRect();
-                  if (rect.top < window.innerHeight * 0.3) {
-                    scrollHint.classList.remove('visible');
-                    window.removeEventListener('scroll', hideHint);
-                  }
-                }, { passive: true });
-              }, 500);
-            } else {
-              gallerySection.classList.remove('in-view');
-              scrollHint.classList.remove('visible');
-            }
-          });
-        }, { threshold: 0.1 });
-        
-        observer.observe(gallerySection);
+      if (gallerySection && !ENABLE_3D_GALLERY) {
+        gallerySection.remove();
+        return;
       }
       
-      // Gallery end message visibility
-      const endMessage = document.getElementById('gallery-end-message');
-      if (gallerySection && endMessage) {
-        window.addEventListener('scroll', () => {
-          const rect = gallerySection.getBoundingClientRect();
-          const sectionHeight = gallerySection.offsetHeight;
-          const scrolled = -rect.top;
-          const progress = scrolled / (sectionHeight - window.innerHeight);
+      // Solo ejecutar lo siguiente si la galería está habilitada
+      if (ENABLE_3D_GALLERY) {
+        if (typeof initGallery3D === 'function') {
+          initGallery3D();
+        }
+        
+        // Gallery scroll hint visibility
+        const scrollHint = document.getElementById('gallery-scroll-hint');
+        
+        if (gallerySection && scrollHint) {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                gallerySection.classList.add('in-view');
+                scrollHint.classList.add('visible');
+                
+                // Hide after some scroll
+                setTimeout(() => {
+                  window.addEventListener('scroll', function hideHint() {
+                    const rect = gallerySection.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.3) {
+                      scrollHint.classList.remove('visible');
+                      window.removeEventListener('scroll', hideHint);
+                    }
+                  }, { passive: true });
+                }, 500);
+              } else {
+                gallerySection.classList.remove('in-view');
+                scrollHint.classList.remove('visible');
+              }
+            });
+          }, { threshold: 0.1 });
           
-          // Show message when near the end (80%+) - stays visible once shown
-          if (progress > 0.80) {
-            endMessage.classList.add('visible');
-          } else {
-            endMessage.classList.remove('visible');
-          }
-        }, { passive: true });
+          observer.observe(gallerySection);
+        }
+        
+        // Gallery end message visibility
+        const endMessage = document.getElementById('gallery-end-message');
+        if (gallerySection && endMessage) {
+          window.addEventListener('scroll', () => {
+            const rect = gallerySection.getBoundingClientRect();
+            const sectionHeight = gallerySection.offsetHeight;
+            const scrolled = -rect.top;
+            const progress = scrolled / (sectionHeight - window.innerHeight);
+            
+            // Show message when near the end (80%+) - stays visible once shown
+            if (progress > 0.80) {
+              endMessage.classList.add('visible');
+            } else {
+              endMessage.classList.remove('visible');
+            }
+          }, { passive: true });
+        }
       }
     });
   </script>
