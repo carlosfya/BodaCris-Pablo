@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cómo Llegar | Pablo & Cris</title>
+  <title>Cómo Llegar | Cris & Pablo</title>
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💒</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -89,10 +89,70 @@
       height: 100%;
       z-index: 1;
       transition: opacity 1s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
     }
     
     .canvas-wrapper.fade-out {
       opacity: 0;
+    }
+    
+    /* Canvas - Vertical display on desktop */
+    #frameCanvas {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    
+    @media (min-width: 901px) {
+      .canvas-wrapper {
+        background: #1a1a1a;
+      }
+      
+      #frameCanvas {
+        max-width: clamp(300px, 50vh, 500px);
+        max-height: 100vh;
+        width: auto;
+        height: auto;
+      }
+    }
+    
+    /* Page Title */
+    .page-title {
+      position: fixed;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      text-align: center;
+      opacity: 1;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+    
+    .page-title.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .page-title__text {
+      font-family: var(--font-title);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      color: var(--color-white);
+      margin: 0;
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    
+    .page-title__line {
+      width: 100px;
+      height: 2px;
+      background: var(--color-white);
+      opacity: 0.5;
+      margin: 0.01rem auto 0;
     }
     
     /* Background Image */
@@ -102,9 +162,10 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('images/FondoComoLlegar.png');
-      background-size: cover;
+      background-image: url('images/folletoComoLlegar.png');
+      background-size: contain;
       background-position: center;
+      background-repeat: no-repeat;
       z-index: 0;
       opacity: 0;
       transition: opacity 1s ease;
@@ -147,13 +208,13 @@
     }
     
     .static-link--iglesia {
-      top: 15%;
-      left: 2rem;
-    }
+      top: 42%;
+      right: 0.5rem;
+        }
     
     .static-link--finca {
-      top: 55%;
-      right: 2rem;
+      top: 75%;
+      right: 0.5rem;
     }
     
     .static-link__icon {
@@ -175,12 +236,6 @@
       font-weight: 500;
       letter-spacing: 0.03em;
       color: var(--color-text-dark);
-    }
-    
-    #frameCanvas {
-      display: block;
-      width: 100%;
-      height: 100%;
     }
     
     /* Overlay UI - Minimalista */
@@ -290,66 +345,65 @@
       50% { transform: translateY(6px); opacity: 1; }
     }
     
-    /* Progress Bar */
-    .progress-bar {
-      position: fixed;
-      top: var(--header-height);
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-      z-index: 100;
-      transition: width 0.1s linear;
-    }
-    
-    /* Navbar stays on top - transparent over canvas */
+    /* Navbar - black during animation */
     .header {
       z-index: 1000 !important;
-      background: transparent !important;
+      background: #000 !important;
       backdrop-filter: none;
+      transition: background 0.8s ease, color 0.8s ease;
     }
     
-    /* Solo los elementos visibles en desktop sobre el canvas son blancos */
+    /* Logo and toggle icons - white during animation */
     .header .nav__logo {
       color: var(--color-white) !important;
       text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: color 0.8s ease, text-shadow 0.8s ease;
     }
     
     .header .nav__toggle i {
       color: var(--color-white) !important;
       text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: color 0.8s ease, text-shadow 0.8s ease;
     }
     
-    /* El menú sidebar mantiene sus estilos normales del sidebar.css */
-    /* (fondo con imagen del pavo real) */
-    
-    .nav__link {
-      color: var(--color-text) !important;
-      text-shadow: none !important;
+    /* Navbar in folleto mode - beige background and green text */
+    .header.transition-mode {
+      background: #F5F1E8 !important;
     }
     
-    .nav__link:hover,
-    .nav__link.active {
-      color: var(--color-primary-dark) !important;
-      opacity: 1 !important;
+    .header.transition-mode .nav__logo {
+      color: rgba(113, 129, 98, 0.6) !important;
+      text-shadow: none;
     }
     
-    .nav__close i {
-      color: var(--color-text) !important;
-      text-shadow: none !important;
+    .header.transition-mode .nav__toggle i {
+      color: rgba(113, 129, 98, 0.6) !important;
+      text-shadow: none;
     }
     
-    /* En desktop, los links visibles son blancos */
-    @media screen and (min-width: 769px) {
-      .nav__link {
+    /* Estilos de links solo en desktop para no afectar el sidebar móvil */
+    @media (min-width: 901px) {
+      .header .nav__link {
         color: var(--color-white) !important;
         text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        transition: color 0.8s ease, text-shadow 0.8s ease;
       }
       
-      .nav__link:hover,
-      .nav__link.active {
+      .header .nav__link:hover,
+      .header .nav__link.active {
         color: var(--color-white) !important;
         opacity: 0.8 !important;
+      }
+      
+      .header.transition-mode .nav__link {
+        color: rgba(139, 154, 125, 0.6) !important;
+        text-shadow: none !important;
+      }
+      
+      .header.transition-mode .nav__link:hover,
+      .header.transition-mode .nav__link.active {
+        color: rgba(139, 154, 125, 0.8) !important;
+        opacity: 1 !important;
       }
     }
     
@@ -357,7 +411,26 @@
     .footer-section {
       position: relative;
       z-index: 20;
-      background: var(--color-bg);
+      background: #F5F1E8;
+    }
+    
+    /* Page and body background */
+    body {
+      background: #F5F1E8 !important;
+    }
+    
+    /* Footer hidden until final section */
+    .footer {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+      z-index: 25;
+      position: relative;
+    }
+    
+    .footer.visible {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     /* Mobile adjustments */
@@ -388,8 +461,6 @@
     <p class="loader__progress" id="loaderProgress">0%</p>
   </div>
 
-  <!-- Progress Bar -->
-  <div class="progress-bar" id="progressBar"></div>
 
   <header class="header" id="header">
     <nav class="nav container">
@@ -409,18 +480,24 @@
   </header>
 
   <main class="main">
+    <!-- Page Title -->
+    <div class="page-title" id="pageTitle">
+      <h1 class="page-title__text anim-fade-up">Cómo Llegar</h1>
+      <div class="page-title__line anim-scale-x"></div>
+    </div>
+
     <!-- Background Image (initially hidden) -->
     <div class="background-image" id="backgroundImage"></div>
     
     <!-- Static Links on Background (appear after transition) -->
-    <a class="static-link static-link--iglesia" id="staticLinkIglesia" href="https://maps.google.com?q=Iglesia+de+San+Pedro" target="_blank" rel="noopener">
+    <a class="static-link static-link--iglesia" id="staticLinkIglesia" href="https://maps.google.com?q=Iglesia+del+Sagrado+Corazón+Málaga" target="_blank" rel="noopener">
       <span class="static-link__icon"><i class="fas fa-church"></i></span>
-      <span class="static-link__text">Iglesia de San Pedro</span>
+      <span class="static-link__text">Ver en Maps</span>
     </a>
     
-    <a class="static-link static-link--finca" id="staticLinkFinca" href="https://maps.google.com?q=Finca+El+Olivar" target="_blank" rel="noopener">
+    <a class="static-link static-link--finca" id="staticLinkFinca" href="https://maps.google.com?q=Finca+las+Yeguas+Málaga" target="_blank" rel="noopener">
       <span class="static-link__icon"><i class="fas fa-map-marker-alt"></i></span>
-      <span class="static-link__text">Finca El Olivar</span>
+      <span class="static-link__text">Ver en Maps</span>
     </a>
     
     <!-- Canvas Container -->
@@ -432,20 +509,20 @@
     <div class="scroll-container" id="scrollContainer">
       
       <!-- Church Overlay (Start) -->
-      <a class="location-overlay overlay--iglesia" id="overlayIglesia" href="https://maps.google.com?q=Iglesia+de+San+Pedro" target="_blank" rel="noopener">
+      <a class="location-overlay overlay--iglesia" id="overlayIglesia" href="https://maps.google.com?q=Iglesia+del+Sagrado+Corazón+Málaga" target="_blank" rel="noopener">
         <span class="overlay__icon"><i class="fas fa-map-marker-alt"></i></span>
         <span class="overlay__text">
           <span class="overlay__title">Ceremonia</span>
-          <span class="overlay__name">Iglesia de San Pedro</span>
+          <span class="overlay__name">Iglesia del Sagrado Corazón</span>
         </span>
       </a>
 
       <!-- Finca Overlay (End) -->
-      <a class="location-overlay overlay--finca hidden" id="overlayFinca" href="https://maps.google.com?q=Finca+El+Olivar" target="_blank" rel="noopener">
+      <a class="location-overlay overlay--finca hidden" id="overlayFinca" href="https://maps.google.com?q=Finca+las+Yeguas+Málaga" target="_blank" rel="noopener">
         <span class="overlay__icon"><i class="fas fa-map-marker-alt"></i></span>
         <span class="overlay__text">
           <span class="overlay__title">Celebración</span>
-          <span class="overlay__name">Finca El Olivar</span>
+          <span class="overlay__name">Finca las Yeguas</span>
         </span>
       </a>
 
@@ -456,6 +533,13 @@
       
     </div>
   </main>
+
+  <footer class="footer">
+    <div class="container">
+      <h3 class="footer__title">Cris & Pablo</h3>
+      <p class="footer__date">20 · 06 · 2026</p>
+    </div>
+  </footer>
 
   <script src="js/script.js"></script>
   <script>
@@ -482,7 +566,6 @@
       const ctx = canvas.getContext('2d');
       const loader = document.getElementById('loader');
       const loaderProgress = document.getElementById('loaderProgress');
-      const progressBar = document.getElementById('progressBar');
       const overlayIglesia = document.getElementById('overlayIglesia');
       const overlayFinca = document.getElementById('overlayFinca');
       const scrollIndicator = document.getElementById('scrollIndicator');
@@ -500,16 +583,32 @@
       let scrollDirection = 1; // 1 = down, -1 = up
       let lastScrollY = 0;
       
-      // ========== CANVAS RESIZE (object-fit: cover) ==========
+      // Transition state
+      let hasTransitionedToBackground = false;
+      let transitionTimeout = null;
+      
+      // ========== CANVAS RESIZE (object-fit: cover on mobile, vertical on desktop) ==========
       function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        const isDesktop = window.innerWidth > 900;
+        
+        if (isDesktop) {
+          // Desktop: vertical video format (mobile-like)
+          // Use a narrower viewport to simulate mobile screen
+          const maxWidth = Math.min(450, window.innerWidth * 0.35);
+          canvas.width = maxWidth;
+          canvas.height = window.innerHeight;
+        } else {
+          // Mobile: full screen
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        
         if (isReady && images[currentFrame]) {
           drawFrame(currentFrame);
         }
       }
       
-      // Draw frame with cover behavior
+      // Draw frame with cover behavior on mobile, contain on desktop
       function drawFrame(frameIndex) {
         const img = images[frameIndex];
         if (!img || !img.complete) return;
@@ -518,22 +617,44 @@
         const imgRatio = img.width / img.height;
         
         let drawWidth, drawHeight, offsetX, offsetY;
+        const isDesktop = window.innerWidth > 900;
         
-        if (imgRatio > canvasRatio) {
-          // Image is wider - fit by height, crop sides
-          drawHeight = canvas.height;
-          drawWidth = img.width * (canvas.height / img.height);
-          offsetX = (canvas.width - drawWidth) / 2;
-          offsetY = 0;
+        if (isDesktop) {
+          // Desktop: Use "contain" behavior - show all content, may have letterboxing
+          if (imgRatio > canvasRatio) {
+            // Image is wider - fit by height
+            drawHeight = canvas.height;
+            drawWidth = img.width * (canvas.height / img.height);
+            offsetX = (canvas.width - drawWidth) / 2;
+            offsetY = 0;
+          } else {
+            // Image is taller - fit by width
+            drawWidth = canvas.width;
+            drawHeight = img.height * (canvas.width / img.width);
+            offsetX = 0;
+            offsetY = (canvas.height - drawHeight) / 2;
+          }
+          
+          // Fill background with dark color for letterboxing effect
+          ctx.fillStyle = '#1a1a1a';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
         } else {
-          // Image is taller - fit by width, crop top/bottom
-          drawWidth = canvas.width;
-          drawHeight = img.height * (canvas.width / img.width);
-          offsetX = 0;
-          offsetY = (canvas.height - drawHeight) / 2;
+          // Mobile: Use "cover" behavior - fill entire canvas, may crop
+          if (imgRatio > canvasRatio) {
+            // Image is wider - fit by height, crop sides
+            drawHeight = canvas.height;
+            drawWidth = img.width * (canvas.height / img.height);
+            offsetX = (canvas.width - drawWidth) / 2;
+            offsetY = 0;
+          } else {
+            // Image is taller - fit by width, crop top/bottom
+            drawWidth = canvas.width;
+            drawHeight = img.height * (canvas.width / img.width);
+            offsetX = 0;
+            offsetY = (canvas.height - drawHeight) / 2;
+          }
         }
         
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
       }
       
@@ -590,8 +711,13 @@
               currentFrame = Math.round(frameAnimation.frame);
               drawFrame(currentFrame);
               
-              // Update progress bar
-              progressBar.style.width = `${progress * 100}%`;
+              // Hide page title when scroll starts
+              const pageTitle = document.getElementById('pageTitle');
+              if (progress > 0) {
+                pageTitle.classList.add('fade-out');
+              } else {
+                pageTitle.classList.remove('fade-out');
+              }
               
               // Handle overlay visibility
               if (progress < 0.1) {
@@ -612,26 +738,83 @@
               }
               
               // Transition to background image after animation ends
-              if (progress >= 1) {
+              if (progress >= 1 && !hasTransitionedToBackground) {
+                // Clear any pending transition
+                if (transitionTimeout) clearTimeout(transitionTimeout);
+                
                 // Wait 1 second after animation ends, then transition
-                setTimeout(() => {
+                transitionTimeout = setTimeout(() => {
                   const canvasWrapper = document.getElementById('canvasWrapper');
                   const backgroundImage = document.getElementById('backgroundImage');
                   const staticLinkIglesia = document.getElementById('staticLinkIglesia');
                   const staticLinkFinca = document.getElementById('staticLinkFinca');
+                  const footer = document.querySelector('.footer');
+                  const header = document.getElementById('header');
                   
                   canvasWrapper.classList.add('fade-out');
                   backgroundImage.classList.add('visible');
                   
-                  // Hide progress bar and overlays permanently
-                  progressBar.style.display = 'none';
+                  // Change header to folleto colors
+                  if (header) {
+                    header.classList.add('transition-mode');
+                  }
+                  
+                  // Show footer
+                  if (footer) {
+                    footer.classList.add('visible');
+                  }
+                  
+                  // Hide overlays temporarily
                   overlayIglesia.style.display = 'none';
                   overlayFinca.style.display = 'none';
                   
                   // Show static links after background appears
                   staticLinkIglesia.classList.add('visible');
                   staticLinkFinca.classList.add('visible');
-                }, 1000);
+                  
+                  hasTransitionedToBackground = true;
+                }, 500);
+              }
+              
+              // Revert to animation if scrolling back up
+              if (progress < 0.95 && hasTransitionedToBackground) {
+                
+                // Clear any pending transition
+                if (transitionTimeout) {
+                  clearTimeout(transitionTimeout);
+                  transitionTimeout = null;
+                }
+                
+                const canvasWrapper = document.getElementById('canvasWrapper');
+                const backgroundImage = document.getElementById('backgroundImage');
+                const staticLinkIglesia = document.getElementById('staticLinkIglesia');
+                const staticLinkFinca = document.getElementById('staticLinkFinca');
+                const footer = document.querySelector('.footer');
+                const header = document.getElementById('header');
+                
+                // Revert the transition
+                canvasWrapper.classList.remove('fade-out');
+                backgroundImage.classList.remove('visible');
+                
+                // Change header back to animation colors
+                if (header) {
+                  header.classList.remove('transition-mode');
+                }
+                
+                // Hide footer
+                if (footer) {
+                  footer.classList.remove('visible');
+                }
+                
+                // Show overlays again
+                overlayIglesia.style.display = 'flex';
+                overlayFinca.style.display = 'flex';
+                
+                // Hide static links
+                staticLinkIglesia.classList.remove('visible');
+                staticLinkFinca.classList.remove('visible');
+                
+                hasTransitionedToBackground = false;
               }
             }
           }

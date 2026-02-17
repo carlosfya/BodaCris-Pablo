@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Preboda | Pablo & Cris</title>
+  <title>Preboda | Cris & Pablo</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💒</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,7 +69,56 @@
       .preboda-datetime { font-weight:600; color:var(--color-primary-dark); letter-spacing:0.02em; }
       .map-link { display:inline-flex; align-items:center; gap:0.5rem; padding:0.55rem 1rem; border-radius:999px; border:1px solid rgba(var(--color-primary-rgb),0.12); color:var(--color-primary-dark); text-decoration:none; font-weight:600; transition: var(--transition); }
       .map-link:hover { background:var(--color-primary); color:var(--color-white); border-color:transparent; }
-      @media (max-width:600px){ .preboda-simple { padding:2rem 1rem; } }
+      
+      @media (max-width:600px){ 
+        .preboda-simple { padding:2rem 1rem; } 
+      }
+      
+      /* Desktop optimizations */
+      @media (min-width: 901px) {
+        .preboda-simple .container {
+          padding: clamp(4rem, 8vw, 8rem) 2rem !important;
+          gap: clamp(2rem, 5vw, 3.5rem) !important;
+        }
+        
+        .preboda-place-img {
+          max-width: clamp(600px, 70vw, 1000px);
+          height: auto;
+          max-height: 500px;
+          object-fit: cover;
+          border-radius: 20px;
+          box-shadow: var(--shadow-strong);
+          transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .preboda-place-img:hover {
+          transform: scale(1.02);
+        }
+        
+        .preboda-card {
+          max-width: 800px;
+        }
+        
+        .preboda-card .section__title {
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          margin-bottom: clamp(1rem, 2vw, 1.5rem);
+        }
+        
+        .preboda-datetime {
+          font-size: clamp(1rem, 1.5vw, 1.2rem);
+        }
+        
+        .preboda-card p {
+          font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+          line-height: 1.8;
+        }
+        
+        .map-link {
+          padding: 0.75rem 1.5rem;
+          font-size: clamp(0.9rem, 1.2vw, 1rem);
+          margin-top: clamp(1rem, 2vw, 1.5rem) !important;
+        }
+      }
     </style>
 
     <section class="section preboda-simple" id="preboda-event">
@@ -78,8 +127,8 @@
 
         <div class="preboda-card">
           <h1 class="section__title">Preboda</h1>
-          <p class="preboda-datetime">Viernes, 19 de Junio · 20:00</p>
-          <p style="color:var(--color-text-light); margin-top:1rem; max-width:650px;">Te invitamos a una reunión informal con cañas y tapas el día antes de la boda. Será un momento relajado para encontrarnos antes del gran día.</p>
+          <p class="preboda-datetime">Viernes, 19 de Junio · 20:30</p>
+          <p style="color:var(--color-text-light); margin-top:1rem; max-width:650px;">Te invitamos a un encuentro informal el día antes de la boda en Molabassa, en el paseo marítimo de Pedregalejo, Málaga.</p>
           <p style="margin-top:1.25rem;"><a href="https://maps.app.goo.gl/7q3fK8gHkvWXtTZ97" target="_blank" rel="noopener" class="map-link">Ver en Google Maps <i class="fas fa-external-link-alt" style="font-size:0.85rem"></i></a></p>
         </div>
       </div>
@@ -88,7 +137,7 @@
 
   <footer class="footer">
     <div class="container">
-      <h3 class="footer__title">Pablo & Cris</h3>
+      <h3 class="footer__title">Cris & Pablo</h3>
       <p class="footer__date">20 · 06 · 2026</p>
     </div>
   </footer>

@@ -182,3 +182,52 @@
     justify-content: center;
   }
 }
+
+/* Desktop Optimizations */
+@media (min-width: 901px) {
+  .gifts-page {
+    padding-bottom: clamp(4rem, 8vw, 6rem);
+  }
+
+  .gifts-container {
+    gap: clamp(3rem, 8vw, 6rem);
+    padding: clamp(4rem, 10vw, 8rem) 2rem;
+  }
+
+  .gifts-image-wrapper {
+    height: clamp(500px, 70vh, 700px);
+  }
+
+  .gifts-image {
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .gifts-title {
+    font-size: clamp(3rem, 6vw, 5rem);
+    margin-bottom: 2.5rem;
+  }
+
+  .gifts-text {
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    line-height: 2;
+  }
+
+  .gifts-highlight {
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
+    margin-bottom: 3.5rem;
+  }
+
+  .iban-label {
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .iban-number {
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+  }
+
+  .btn-copy-minimal {
+    width: 45px;
+    height: 45px;
+  }
+}

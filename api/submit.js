@@ -34,7 +34,9 @@ module.exports = async function handler(req, res) {
       nombreAcompanante,
       bus, 
       alergias, 
-      asistenciaPreboda
+      asistenciaPreboda,
+      sandalias,
+      sandaliaTalla
     } = req.body;
 
     // Validar campos requeridos
@@ -79,24 +81,89 @@ module.exports = async function handler(req, res) {
       minute: '2-digit',
     });
 
-    // Añadir fila al Google Sheet con todos los campos
-    // Columnas: Fecha | Nombre | Asistencia Boda | Acompañante | Nombre Acompañante | Bus | Alergias | Asistencia Preboda
-    const response = await sheets.spreadsheets.values.append({
+    // Primero, obtener el nombre de la primera hoja
+    const sheetsInfo = await sheets.spreadsheets.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'A:H', // Usa la primera hoja del Sheet
-      valueInputOption: 'USER_ENTERED',
+    });
+    
+    const sheetName = sheetsInfo.data.sheets[0].properties.title;
+    const sheetId = sheetsInfo.data.sheets[0].properties.sheetId;
+    console.log('Nombre de la hoja:', sheetName, 'ID:', sheetId);
+
+    // Obtener la última fila con datos
+    const dataResponse = await sheets.spreadsheets.values.get({
+      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      range: `'${sheetName}'!A:A`,
+    });
+
+    const lastRow = (dataResponse.data.values?.length || 1);
+    console.log('Última fila:', lastRow);
+
+    // Preparar headers
+    const headers = ['Fecha', 'Nombre', 'Boda', 'Acompañante', 'Nombre acompañante', 'bus', 'Alergias', 'Asistencia Preboda', 'Sandalias', 'Talla Sandalia'];
+
+    // Preparar fila de datos con 10 columnas
+    const dataRow = [
+      fecha, 
+      nombre, 
+      asistenciaBoda, 
+      acompañante || 'No especificado',
+      nombreAcompanante || 'No especificado',
+      bus || 'No especificado',
+      alergias || 'Ninguna',
+      asistenciaPreboda || '',
+      sandalias || 'No especificado',
+      sandaliaTalla || ''
+    ];
+
+    // Convertir arrays a formato de celdas para UpdateCellsRequest
+    const headerCells = headers.map(val => ({
+      userEnteredValue: { stringValue: String(val) }
+    }));
+
+    const dataCells = dataRow.map(val => ({
+      userEnteredValue: { stringValue: String(val) }
+    }));
+
+    // Usar spreadsheets.batchUpdate con UpdateCellsRequest para escribir sin limitaciones de tableRange
+    const response = await sheets.spreadsheets.batchUpdate({
+      spreadsheetId: process.env.GOOGLE_SHEET_ID,
       requestBody: {
-        values: [[
-          fecha, 
-          nombre, 
-          asistenciaBoda, 
-          acompañante || 'No especificado',
-          nombreAcompanante || 'No especificado',
-          bus || 'No especificado',
-          alergias || 'Ninguna',
-          asistenciaPreboda || ''
-        ]],
-      },
+        requests: [
+          {
+            // Actualizar headers en fila 1
+            updateCells: {
+              rows: [
+                {
+                  values: headerCells
+                }
+              ],
+              fields: 'userEnteredValue',
+              start: {
+                sheetId: sheetId,
+                rowIndex: 0,
+                columnIndex: 0
+              }
+            }
+          },
+          {
+            // Actualizar datos en la fila correspondiente
+            updateCells: {
+              rows: [
+                {
+                  values: dataCells
+                }
+              ],
+              fields: 'userEnteredValue',
+              start: {
+                sheetId: sheetId,
+                rowIndex: lastRow,
+                columnIndex: 0
+              }
+            }
+          }
+        ]
+      }
     });
 
     // Respuesta exitosa

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Confirmar Asistencia | Pablo & Cris</title>
+  <title>Asistencia | Cris & Pablo</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💒</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -122,6 +122,33 @@
               </div>
             </div>
             
+            <div class="form__group" id="sandalias-group">
+              <label class="form__label"><i class="fas fa-shoe-prints"></i> Para las Señoritas, ¿quieres alpargatas?</label>
+              <div class="form__radio-group">
+                <label class="form__radio">
+                  <input type="radio" name="sandalias" value="No">
+                  <span class="form__radio-label">No</span>
+                </label>
+                <label class="form__radio">
+                  <input type="radio" name="sandalias" value="Sí">
+                  <span class="form__radio-label">Sí</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="form__group" id="sandalias-talla-group" style="display: none;">
+              <label for="sandaliaTalla" class="form__label"><i class="fas fa-ruler"></i> Talla de Alpargata</label>
+              <div class="form__talla-buttons">
+                <button type="button" class="form__talla-btn" data-talla="36">36</button>
+                <button type="button" class="form__talla-btn" data-talla="37">37</button>
+                <button type="button" class="form__talla-btn" data-talla="38">38</button>
+                <button type="button" class="form__talla-btn" data-talla="39">39</button>
+                <button type="button" class="form__talla-btn" data-talla="40">40</button>
+                <button type="button" class="form__talla-btn" data-talla="41">41</button>
+              </div>
+              <input type="hidden" id="sandaliaTalla" name="sandaliaTalla" required>
+            </div>
+            
             <button type="submit" class="form__submit" id="submit-btn">
               <span class="form__submit-text">Enviar Confirmación</span>
               <span class="form__submit-loading"><i class="fas fa-spinner fa-spin"></i> Enviando...</span>
@@ -134,7 +161,7 @@
 
   <footer class="footer">
     <div class="container">
-      <h3 class="footer__title">Pablo & Cris</h3>
+      <h3 class="footer__title">Cris & Pablo</h3>
       <p class="footer__date">20 · 06 · 2026</p>
     </div>
   </footer>
@@ -153,6 +180,43 @@
           group.style.display = 'none';
           input.value = ''; // Limpiar el campo si se selecciona No
         }
+      });
+    });
+
+
+
+    // Mostrar/ocultar selector de talla cuando se selecciona Sí en sandalias
+    document.querySelectorAll('input[name="sandalias"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const tallaGroup = document.getElementById('sandalias-talla-group');
+        const tallaInput = document.getElementById('sandaliaTalla');
+        if (this.value === 'Sí') {
+          tallaGroup.style.display = 'block';
+          tallaInput.required = true;
+        } else {
+          tallaGroup.style.display = 'none';
+          tallaInput.value = '';
+          tallaInput.required = false;
+          // Limpiar botones seleccionados
+          document.querySelectorAll('.form__talla-btn').forEach(btn => {
+            btn.classList.remove('active');
+          });
+        }
+      });
+    });
+
+    // Manejo de botones de talla
+    document.querySelectorAll('.form__talla-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Remover clase active de todos los botones
+        document.querySelectorAll('.form__talla-btn').forEach(b => {
+          b.classList.remove('active');
+        });
+        // Añadir clase active al botón clickeado
+        this.classList.add('active');
+        // Actualizar el valor del input hidden
+        document.getElementById('sandaliaTalla').value = this.dataset.talla;
       });
     });
   </script>

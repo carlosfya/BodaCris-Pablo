@@ -4,6 +4,7 @@
 ============================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initResponsiveImages();
   initNavigation();
   initCountdown();
   initScrollHeader();
@@ -13,6 +14,52 @@ document.addEventListener('DOMContentLoaded', () => {
   initCopyIBAN();
   initScrollReveal();
 });
+
+/* ============================================
+   RESPONSIVE IMAGES - Change image based on screen size
+============================================= */
+function initResponsiveImages() {
+  const hero = document.querySelector('.hero');
+  
+  if (!hero) return;
+  
+  function updateHeroImage() {
+    const isDesktop = window.innerWidth > 900;
+    const currentPage = window.location.pathname;
+    
+    if (isDesktop) {
+      // Desktop images
+      if (currentPage.includes('confirmar')) {
+        hero.style.backgroundImage = "url('images/Principal_Horizontal.png')";
+      } else if (!currentPage.includes('como-llegar') && !currentPage.includes('preboda') && 
+                 !currentPage.includes('el-dia') && !currentPage.includes('regalos')) {
+        // Main index page
+        hero.style.backgroundImage = "url('images/Principal_Horizontal.png')";
+      }
+      hero.style.backgroundPosition = 'center center';
+    } else {
+      // Mobile images
+      if (currentPage.includes('confirmar')) {
+        hero.style.backgroundImage = "url('images/image3.png')";
+      } else if (!currentPage.includes('como-llegar') && !currentPage.includes('preboda') && 
+                 !currentPage.includes('el-dia') && !currentPage.includes('regalos')) {
+        // Main index page
+        hero.style.backgroundImage = "url('images/Principal.jpeg')";
+      }
+      hero.style.backgroundPosition = '20% center';
+    }
+  }
+  
+  // Initial call
+  updateHeroImage();
+  
+  // Update on window resize
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(updateHeroImage, 150);
+  });
+}
 
 /* ============================================
    NAVIGATION (Mobile Menu)
@@ -328,7 +375,9 @@ function initRSVPForm() {
       nombreAcompanante: formData.get('nombreAcompanante') || 'No especificado',
       bus: formData.get('bus') || 'No especificado',
       alergias: formData.get('alergias') || '',
-      asistenciaPreboda: formData.get('asistenciaPreboda') || ''
+      asistenciaPreboda: formData.get('asistenciaPreboda') || '',
+      sandalias: formData.get('sandalias') || 'No especificado',
+      sandaliaTalla: formData.get('sandaliaTalla') || ''
     };
 
     console.log('Datos a enviar:', data); // Para depurar

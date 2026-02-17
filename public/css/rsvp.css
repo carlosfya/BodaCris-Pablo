@@ -209,3 +209,157 @@
   transform: none !important;
   transition: none !important;
 }
+
+/* Size Buttons for Sandalias */
+.form__talla-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.form__talla-btn {
+  padding: 0.9rem 1rem;
+  background-color: var(--color-bg-alt);
+  border: 2px solid #e0e0e0;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form__talla-btn:hover {
+  border-color: var(--color-primary-light);
+  background-color: #f5f5f5;
+}
+
+.form__talla-btn.active {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+  box-shadow: 0 4px 12px rgba(139, 154, 125, 0.3);
+}
+
+.form__size-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.form__size-btn {
+  padding: 0.8rem 1rem;
+  background-color: var(--color-bg-alt);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.form__size-btn:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+/* Select Dropdown Elegante */
+.form__select {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text);
+  background-color: var(--color-bg-alt);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238B9A7D' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1.5rem center;
+  padding-right: 3rem;
+  appearance: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.form__select:hover {
+  border-color: var(--color-primary-light);
+}
+
+.form__select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background-color: var(--color-white);
+  box-shadow: 0 0 0 4px rgba(139, 154, 125, 0.1);
+}
+
+.form__select option {
+  padding: 0.5rem;
+  color: var(--color-text);
+  background-color: var(--color-white);
+}
+
+/* ============================================
+   DESKTOP OPTIMIZATIONS
+============================================= */
+@media (min-width: 901px) {
+  .rsvp-section {
+    padding-top: clamp(4rem, 8vw, 6rem);
+    padding-bottom: clamp(6rem, 10vw, 8rem);
+  }
+  
+  .rsvp-container {
+    max-width: 700px;
+    padding: clamp(2.5rem, 5vw, 4rem);
+  }
+  
+  .form__label {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    margin-bottom: 1.2rem;
+  }
+  
+  .form__input,
+  .form__textarea,
+  .form__select {
+    padding: 1.2rem 1.8rem;
+    font-size: 1rem;
+  }
+  
+  .form__textarea {
+    min-height: 140px;
+  }
+  
+  .form__radio-group {
+    gap: 2rem;
+  }
+  
+  .form__radio-label {
+    padding: 1.2rem 1.5rem;
+  }
+  
+  .form__submit {
+    padding: 1.3rem;
+    font-size: 1.1rem;
+    margin-top: 2.5rem;
+  }
+  
+  .form__talla-buttons,
+  .form__size-buttons {
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    gap: 1rem;
+  }
+  
+  .form__talla-btn,
+  .form__size-btn {
+    padding: 1rem 1.2rem;
+    font-size: 1rem;
+  }
+}

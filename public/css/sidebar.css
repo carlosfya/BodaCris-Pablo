@@ -135,7 +135,7 @@
 
   /* Menu Footer (Optional) */
   .nav__menu::after {
-    content: 'Pablo & Cris';
+    content: 'Cris & Pablo';
     position: absolute;
     bottom: 2rem;
     font-family: var(--font-body);

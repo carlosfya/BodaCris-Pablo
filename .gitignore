@@ -16,3 +16,6 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+# Vite compilado - no versionar archivos generados
+public/ui/timeline.js
+public/ui/timeline.css

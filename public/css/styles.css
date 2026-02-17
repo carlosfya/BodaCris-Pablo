@@ -1875,3 +1875,158 @@ input, textarea, select {
     display: none;
   }
 }
+
+/* ============================================
+   DESKTOP OPTIMIZATIONS (> 900px)
+============================================= */
+@media (min-width: 901px) {
+  /* Header - Hide mobile toggle */
+  .nav__toggle,
+  .nav__close {
+    display: none !important;
+  }
+  
+  .nav__menu {
+    position: static;
+    width: auto;
+    height: auto;
+    background: transparent;
+    display: flex;
+    box-shadow: none;
+  }
+  
+  .nav__list {
+    flex-direction: row;
+    gap: 2.5rem;
+  }
+  
+  .nav__link {
+    color: var(--color-white);
+    font-size: var(--fs-small);
+  }
+  
+  /* Hero Section - Better for desktop */
+  .hero {
+    background-attachment: fixed;
+    background-position: center center;
+  }
+  
+  .hero__title {
+    font-size: clamp(3.5rem, 8vw, 6rem);
+  }
+  
+  .hero__date {
+    margin-bottom: 4rem;
+  }
+  
+  .countdown {
+    gap: clamp(1rem, 4vw, 2rem);
+  }
+  
+  /* Timeline - Grid layout for desktop */
+  .eldia__timeline {
+    gap: clamp(4rem, 10vw, 8rem);
+  }
+  
+  .eldia__item {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    gap: clamp(3rem, 8vw, 6rem);
+  }
+  
+  .eldia__image {
+    aspect-ratio: 3/4;
+  }
+  
+  /* Ubicación Grid - 3 columns on desktop */
+  .ubicacion__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(2rem, 4vw, 3rem);
+  }
+  
+  /* Preboda Cards - 2 columns on desktop */
+  .preboda__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(2rem, 4vw, 3rem);
+    max-width: 100%;
+  }
+  
+  /* Historia gallery - 3 columns on desktop */
+  .historia__gallery {
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 3vw, 2rem);
+    max-width: 100%;
+  }
+  
+  /* RSVP Form - Wider on desktop */
+  .rsvp-form {
+    max-width: 650px;
+    padding: clamp(2.5rem, 4vw, 3.5rem);
+  }
+  
+  /* Regalos Card - Better spacing */
+  .regalos__card {
+    max-width: 550px;
+  }
+  
+  /* Section padding - Larger on desktop */
+  .section {
+    padding: var(--section-padding) 0;
+  }
+  
+  /* Container - Wider max-width */
+  .container {
+    max-width: 1200px;
+  }
+  
+  /* Better hover effects on desktop */
+  .ubicacion__card {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.4s ease;
+  }
+  
+  .ubicacion__card:hover {
+    transform: translate3d(0, -12px, 0);
+    box-shadow: var(--shadow-strong);
+  }
+  
+  .eldia__item:hover .eldia__image img {
+    transform: scale(1.08);
+  }
+  
+  /* Gallery 3D fallback - 3 columns */
+  .gallery3d-fallback {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* More visible scroll hints on desktop */
+  .hero__scroll {
+    font-size: 1.5rem;
+    opacity: 0.7;
+  }
+  
+  .hero__scroll:hover {
+    opacity: 1;
+  }
+}
+
+/* Large Desktop (> 1200px) */
+@media (min-width: 1201px) {
+  /* Extra spacing for very large screens */
+  :root {
+    --section-padding: clamp(6rem, 12vw, 10rem);
+  }
+  
+  .eldia__timeline {
+    gap: clamp(6rem, 15vw, 10rem);
+  }
+  
+  .historia__gallery {
+    gap: clamp(2rem, 4vw, 3rem);
+  }
+  
+  /* Extra padding for large screens */
+  .ubicacion__card:hover {
+    transform: translate3d(0, -16px, 0);
+  }
+}
