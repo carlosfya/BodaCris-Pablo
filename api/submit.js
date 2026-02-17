@@ -33,6 +33,7 @@ module.exports = async function handler(req, res) {
       acompañante,
       nombreAcompanante,
       bus, 
+      busHorario,
       alergias, 
       asistenciaPreboda,
       sandalias,
@@ -44,6 +45,13 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ 
         success: false, 
         error: 'Faltan campos requeridos: nombre y asistencia a la boda' 
+      });
+    }
+
+    if (bus === 'Sí' && !busHorario) {
+      return res.status(400).json({
+        success: false,
+        error: 'Falta el horario de vuelta del bus'
       });
     }
 
@@ -100,7 +108,7 @@ module.exports = async function handler(req, res) {
     console.log('Última fila:', lastRow);
 
     // Preparar headers
-    const headers = ['Fecha', 'Nombre', 'Boda', 'Acompañante', 'Nombre acompañante', 'bus', 'Alergias', 'Asistencia Preboda', 'Sandalias', 'Talla Sandalia'];
+    const headers = ['Fecha', 'Nombre', 'Boda', 'Acompañante', 'Nombre acompañante', 'bus', 'Horario bus', 'Alergias', 'Asistencia Preboda', 'Sandalias', 'Talla Sandalia'];
 
     // Preparar fila de datos con 10 columnas
     const dataRow = [
@@ -110,6 +118,7 @@ module.exports = async function handler(req, res) {
       acompañante || 'No especificado',
       nombreAcompanante || 'No especificado',
       bus || 'No especificado',
+      busHorario || 'No especificado',
       alergias || 'Ninguna',
       asistenciaPreboda || '',
       sandalias || 'No especificado',

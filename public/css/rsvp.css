@@ -144,6 +144,18 @@
   background-color: rgba(139, 154, 125, 0.15);
 }
 
+.form__note {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--color-text-light);
+  line-height: 1.4;
+}
+
+.form__note strong {
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
 /* Submit Button */
 .form__submit {
   width: 100%;

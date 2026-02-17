@@ -368,12 +368,14 @@ function initRSVPForm() {
     
     // Get form data
     const formData = new FormData(form);
+    const busHorarioSelected = document.querySelector('input[name="busHorario"]:checked');
     const data = {
       nombre: formData.get('nombre'),
       asistenciaBoda: formData.get('asistenciaBoda') || 'No especificado',
       acompañante: formData.get('acompanante') || 'No especificado',
       nombreAcompanante: formData.get('nombreAcompanante') || 'No especificado',
       bus: formData.get('bus') || 'No especificado',
+      busHorario: (busHorarioSelected && busHorarioSelected.value) || 'No especificado',
       alergias: formData.get('alergias') || '',
       asistenciaPreboda: formData.get('asistenciaPreboda') || '',
       sandalias: formData.get('sandalias') || 'No especificado',
@@ -398,6 +400,16 @@ function initRSVPForm() {
         icon: 'warning',
         title: 'Campos requeridos',
         text: 'Por favor, indica si asistirás a la boda.',
+        confirmButtonColor: '#9caa8b'
+      });
+      return;
+    }
+
+    if (data.bus === 'Sí' && data.busHorario === 'No especificado') {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Campos requeridos',
+        text: 'Por favor, indica el horario de vuelta del bus.',
         confirmButtonColor: '#9caa8b'
       });
       return;

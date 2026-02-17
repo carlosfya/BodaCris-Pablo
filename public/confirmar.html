@@ -90,7 +90,7 @@
             </div>
             
             <div class="form__group">
-              <label class="form__label"><i class="fas fa-bus"></i> Confirmar uso de Bus</label>
+              <label class="form__label"><i class="fas fa-bus"></i> Confirmar uso de Bus (Ida y Vuelta)</label>
               <div class="form__radio-group">
                 <label class="form__radio">
                   <input type="radio" name="bus" value="Sí">
@@ -101,6 +101,21 @@
                   <span class="form__radio-label">Iré por mi cuenta</span>
                 </label>
               </div>
+            </div>
+
+            <div class="form__group" id="bus-horario-group" style="display: none;">
+              <label class="form__label"><i class="fas fa-clock"></i> ¿En qué horario de vuelta quieres volver? *</label>
+              <div class="form__radio-group">
+                <label class="form__radio">
+                  <input type="radio" name="busHorario" value="2:30">
+                  <span class="form__radio-label">2:30</span>
+                </label>
+                <label class="form__radio">
+                  <input type="radio" name="busHorario" value="4:30">
+                  <span class="form__radio-label">4:30</span>
+                </label>
+              </div>
+              <p class="form__note"><strong>Importante:</strong> Piénsalo bien porque las plazas de bus están muy contadas. Si cambias de idea, avisa a los novios lo antes posible. ¡Muchas gracias!</p>
             </div>
             
             <div class="form__group">
@@ -179,6 +194,26 @@
         } else {
           group.style.display = 'none';
           input.value = ''; // Limpiar el campo si se selecciona No
+        }
+      });
+    });
+
+    // Mostrar/ocultar horario de vuelta si se usa el bus
+    document.querySelectorAll('input[name="bus"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const group = document.getElementById('bus-horario-group');
+        const horarios = document.querySelectorAll('input[name="busHorario"]');
+        if (this.value === 'Sí') {
+          group.style.display = 'block';
+          horarios.forEach(input => {
+            input.required = true;
+          });
+        } else {
+          group.style.display = 'none';
+          horarios.forEach(input => {
+            input.checked = false;
+            input.required = false;
+          });
         }
       });
     });
