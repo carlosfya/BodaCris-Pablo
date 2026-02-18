@@ -122,7 +122,7 @@
     /* Page Title */
     .page-title {
       position: fixed;
-      top: 60px;
+      top: 30px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 20;
@@ -348,7 +348,7 @@
     /* Navbar - black during animation */
     .header {
       z-index: 1000 !important;
-      background: #000 !important;
+      background: transparent !important;
       backdrop-filter: none;
       transition: background 0.8s ease, color 0.8s ease;
     }
@@ -551,9 +551,9 @@
       'use strict';
       
       // ========== CONFIGURATION ==========
-      const frameCount = 161;  // Total number of frames
+      const frameCount = 240;  // Total number of frames
       const framePath = 'images/video_trayecto/ezgif-frame-';  // Path pattern
-      const frameExtension = '.jpg';
+      const frameExtension = '.png';
       
       // Pad frame number to 3 digits (001, 002, etc.)
       const getFramePath = (index) => {
@@ -773,7 +773,7 @@
                   staticLinkFinca.classList.add('visible');
                   
                   hasTransitionedToBackground = true;
-                }, 500);
+                }, 350);
               }
               
               // Revert to animation if scrolling back up
@@ -827,7 +827,7 @@
         
         autoScrollActive = true;
         scrollDirection = direction;
-        const scrollSpeed = 4; // Pixels per frame (ajustable)
+        const scrollSpeed = 5.5; // Pixels per frame (ajustable)
         
         function autoScrollFrame() {
           if (!autoScrollActive) return;
